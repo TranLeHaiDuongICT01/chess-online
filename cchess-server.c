@@ -293,6 +293,8 @@ int lobby(int player, char *username) {
         }
         lobbychoose[8] = '\0';
         if (strcmp(lobbychoose, "cre-room") == 0) {
+            printf("Receive: cre-room\n");
+            printf("Send: cre-true\n");
             send(player, "cre-true", 8, 0);
             printf("Create Room\n");
             return 1;
@@ -313,6 +315,8 @@ int lobby(int player, char *username) {
                 send(player, "f", 1, 0);
             }
         } else if (strcmp(lobbychoose, "log--out") == 0) {
+            printf("Receive: log--out\n");
+            printf("Send: log-true\n");
             send(player, "log-true", 8, 0);
             printf("Logout\n");
             return 2;
@@ -326,6 +330,7 @@ int lobby(int player, char *username) {
                 lobbychoose[6] = '\0';
                 printf("Buffer waitInvite: %s\n", lobbychoose);
                 if (strcmp(lobbychoose, "accept") == 0) {
+                    printf("Receive: accept\n");
                     // Chap nhan loi moi (accept)
                     char opponent[24];
                     bzero(opponent, 24);
@@ -339,11 +344,13 @@ int lobby(int player, char *username) {
                     for (int i = 0; i < numbers; i++) {
                         if (strcmp(users[i].name, token) == 0 && users[i].ongame == false) {
                             send(users[i].client_socket, "accept", 6, 0);
+                            printf("Send: accept\n");
                             break;
                         }
                     }
                     return 3;
                 } else if (strcmp(lobbychoose, "refuse") == 0) {
+                    printf("Receive: refuse\n");
                     // Tu choi loi moi (refuse)
                     char opponent[24];
                     bzero(opponent, 24);
@@ -356,6 +363,7 @@ int lobby(int player, char *username) {
                     for (int i = 0; i < numbers; i++) {
                         if (strcmp(users[i].name, opponent) == 0 && users[i].ongame == false) {
                             send(users[i].client_socket, "refuse", 6, 0);
+                            printf("Send: refuse\n");
                         }
                     }
                 }
@@ -375,6 +383,7 @@ int getAllUser(int player) {
         datachoose[8] = '\0';
         printf("Room Data Choose: %s\n", datachoose);
         if (strcmp(datachoose, "get-user") == 0) {
+            printf("Receive: get-user\n");
             // Get user
             char *users_string = malloc(sizeof(char) * 1024);
             strcpy(users_string, "");
@@ -387,7 +396,9 @@ int getAllUser(int player) {
                 }
             }
             send(player, users_string, 1024, 0);
+            printf("Send: %s\n", users_string);
         } else if (strcmp(datachoose, "invite--") == 0) {
+            printf("Receive: invite--\n");
             while (1) {
                 char player2[24];
                 bzero(player2, 24);
@@ -395,7 +406,7 @@ int getAllUser(int player) {
                     perror("ERROR reading from socket");
                     exit(1);
                 }
-                printf("Invite: %s\n", player2);
+                printf("Receive: %s\n", player2);
                 char username[24];
                 for (int i = 0; i < numbers; i++) {
                     if (users[i].client_socket == player && users[i].ongame == false) {
@@ -405,6 +416,7 @@ int getAllUser(int player) {
                 for (int i = 0; i < numbers; i++) {
                     if (strcmp(users[i].name, player2) == 0 && users[i].ongame == false) {
                         send(users[i].client_socket, "invite", 6, 0);
+                        printf("Send: %s\n invite %s", users[i].client_socket, username);
                         send(users[i].client_socket, username, strlen(username), 0);
                     }
                 }
@@ -475,13 +487,13 @@ void *user(void *client_socket) {
                 perror("ERROR reading from socket");
                 exit(1);
             }
-            printf("Login: %s\n", login);
+            printf("Receive: Login: %s\n", login);
 
             char *username = strtok(login, " ");
             char *password = strtok(NULL, " ");
 
             if (checkLogin(username, password) && checkLogged(username)) {
-                printf("100\n");
+                printf("Send: 100\n");
                 send(player, "100", 3, 0);
                 pthread_mutex_lock(&general_mutex);
                 strcpy(users[numbers].name, username);
@@ -508,7 +520,7 @@ void *user(void *client_socket) {
                     break;
                 }
             } else {
-                printf("101\n");
+                printf("Send: 101\n");
                 send(player, "101", 3, 0);
             }
         } else if (strcmp(userchoose, "register") == 0) {
@@ -518,15 +530,15 @@ void *user(void *client_socket) {
                 perror("ERROR reading from socket");
                 exit(1);
             }
-            printf("Register: %s\n", registers);
+            printf("Receive: Register: %s\n", registers);
             char *username = strtok(registers, " ");
             char *password = strtok(NULL, " ");
 
             if (registerAccount(username, password)) {
-                printf("200\n");
+                printf("Send: 200\n");
                 send(player, "200", 3, 0);
             } else {
-                printf("201\n");
+                printf("Send: 01\n");
                 send(player, "201", 3, 0);
             }
         } else if (strcmp(userchoose, "exit") == 0) {

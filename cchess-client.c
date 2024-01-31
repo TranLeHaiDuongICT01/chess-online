@@ -122,8 +122,8 @@ void menuGame(void *sockfd) {
         printf("Menu:\n");
         printf("1. Create Room\n");
         printf("2. Waiting\n");
-        printf("3. Change Password\n");
-        printf("4. Logout\n");
+        // printf("3. Change Password\n");
+        printf("3. Logout\n");
         printf("Select: ");
         scanf("%d", &mainChoice);
         switch (mainChoice) {
@@ -194,40 +194,40 @@ void menuGame(void *sockfd) {
                     }
                 }
                 break;
+            // case 3:
+            //     n = write(socket, "changepa", 8);
+            //     if (n < 0) {
+            //         perror("ERROR writing to socket");
+            //         exit(1);
+            //     }
+            //     printf("Input Old Password: ");
+            //     scanf("%s", oldPassword);
+            //     printf("Input New Password: ");
+            //     scanf("%s", newPassword);
+            //     strcat(oldPassword, " ");
+            //     strcat(oldPassword, newPassword);
+            //     n = write(socket, oldPassword, strlen(oldPassword));
+            //     if (n < 0) {
+            //         perror("ERROR writing to socket");
+            //         exit(1);
+            //     }
+            //     while (1) {
+            //         bzero(buffer, 4);
+            //         n = read(socket, buffer, 4);
+            //         if (n < 0) {
+            //             perror("ERROR reading from socket");
+            //             exit(1);
+            //         }
+            //         if (buffer[0] == 't') {
+            //             printf("Change Password success\n");
+            //             break;
+            //         } else if (buffer[0] == 'f') {
+            //             printf("Change Password false\n");
+            //             break;
+            //         }
+            //     }
+            //     break;
             case 3:
-                n = write(socket, "changepa", 8);
-                if (n < 0) {
-                    perror("ERROR writing to socket");
-                    exit(1);
-                }
-                printf("Input Old Password: ");
-                scanf("%s", oldPassword);
-                printf("Input New Password: ");
-                scanf("%s", newPassword);
-                strcat(oldPassword, " ");
-                strcat(oldPassword, newPassword);
-                n = write(socket, oldPassword, strlen(oldPassword));
-                if (n < 0) {
-                    perror("ERROR writing to socket");
-                    exit(1);
-                }
-                while (1) {
-                    bzero(buffer, 4);
-                    n = read(socket, buffer, 4);
-                    if (n < 0) {
-                        perror("ERROR reading from socket");
-                        exit(1);
-                    }
-                    if (buffer[0] == 't') {
-                        printf("Change Password success\n");
-                        break;
-                    } else if (buffer[0] == 'f') {
-                        printf("Change Password false\n");
-                        break;
-                    }
-                }
-                break;
-            case 4:
                 n = write(socket, "log--out", 8);
                 while (1) {
                     bzero(buffer, 8);
