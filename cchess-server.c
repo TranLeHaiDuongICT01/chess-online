@@ -508,8 +508,8 @@ void *user(void *client_socket) {
             char *password = strtok(NULL, " ");
 
             if (checkLogin(username, password) && checkLogged(username)) {
-                printf("Send: 100\n");
-                send(player, "100", 3, 0);
+                printf("Send: lgt\n");
+                send(player, "lgt", 3, 0);
                 pthread_mutex_lock(&general_mutex);
                 strcpy(users[numbers].name, username);
                 users[numbers].client_socket = player;
@@ -535,8 +535,8 @@ void *user(void *client_socket) {
                     break;
                 }
             } else {
-                printf("Send: 101\n");
-                send(player, "101", 3, 0);
+                printf("Send: lgf\n");
+                send(player, "lgf", 3, 0);
             }
         } else if (strcmp(userchoose, "register") == 0) {
             char registers[48];
@@ -550,11 +550,11 @@ void *user(void *client_socket) {
             char *password = strtok(NULL, " ");
 
             if (registerAccount(username, password)) {
-                printf("Send: 200\n");
-                send(player, "200", 3, 0);
+                printf("Send: ret\n");
+                send(player, "ret", 3, 0);
             } else {
-                printf("Send: 01\n");
-                send(player, "201", 3, 0);
+                printf("Send: ref\n");
+                send(player, "ref", 3, 0);
             }
         } else if (strcmp(userchoose, "exit") == 0) {
             break;

@@ -28,7 +28,6 @@ void broadcast(wchar_t **board, char *one_dimension_board, int player_one, int p
     to_one_dimension_char(board, one_dimension_board);
     printf("\tSending board to %d and %d size(%lu)\n", player_one, player_two, sizeof(one_dimension_board));
     send(player_one, one_dimension_board, 64, 0);
-    printf("Send: %s\n", one_dimension_board);
     send(player_two, one_dimension_board, 64, 0);
     printf("\tSent board...\n");
 }
