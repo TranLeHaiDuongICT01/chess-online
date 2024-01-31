@@ -416,7 +416,7 @@ int getAllUser(int player) {
                 for (int i = 0; i < numbers; i++) {
                     if (strcmp(users[i].name, player2) == 0 && users[i].ongame == false) {
                         send(users[i].client_socket, "invite", 6, 0);
-                        printf("Send: %s\n invite %d", users[i].client_socket, username);
+                        printf("Send: %d\n invite %s", users[i].client_socket, username);
                         send(users[i].client_socket, username, strlen(username), 0);
                     }
                 }
