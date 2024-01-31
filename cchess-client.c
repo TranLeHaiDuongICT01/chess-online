@@ -519,7 +519,7 @@ void *on_signal(void *sockfd) {
             exit(1);
         } else if (buffer[0] == '1' && buffer[1] == '0' && buffer[2] == '0' && buffer[3] == '1') {
             printf("The opponent surrendered. Yes or No\n");
-        } else if (buffer[0] == 'g' && buffer[2] == 'o') {
+        } else if (buffer[0] == '1' && buffer[1] == '0' && buffer[2] == '0' && buffer[3] == '2') {
             printf("You lose\n");
             exit(1);
         } else if (buffer[0] == '1' && buffer[1] == '0' && buffer[2] == '0' && buffer[3] == '3') {
