@@ -309,8 +309,8 @@ int lobby(int player, char *username) {
         lobbychoose[8] = '\0';
         if (strcmp(lobbychoose, "cre-room") == 0) {
             printf("Receive: cre-room\n");
-            printf("Send: cre-true\n");
-            send(player, "cre-true", 8, 0);
+            printf("Send: 400\n");
+            send(player, "400", 8, 0);
             printf("Create Room\n");
             return 1;
         } else if (strcmp(lobbychoose, "changepa") == 0) {
@@ -331,8 +331,8 @@ int lobby(int player, char *username) {
             }
         } else if (strcmp(lobbychoose, "log--out") == 0) {
             printf("Receive: log--out\n");
-            printf("Send: log-true\n");
-            send(player, "log-true", 8, 0);
+            printf("Send: 300\n");
+            send(player, "300", 3, 0);
             printf("Logout\n");
             return 2;
         } else if (strcmp(lobbychoose, "waitting") == 0) {
@@ -358,8 +358,8 @@ int lobby(int player, char *username) {
                     token = strtok(opponent, "\n");
                     for (int i = 0; i < numbers; i++) {
                         if (strcmp(users[i].name, token) == 0 && users[i].ongame == false) {
-                            send(users[i].client_socket, "accept", 6, 0);
-                            printf("Send: accept\n");
+                            send(users[i].client_socket, "501", 3, 0);
+                            printf("Send: 501\n");
                             break;
                         }
                     }
@@ -377,8 +377,8 @@ int lobby(int player, char *username) {
                     token = strtok(opponent, "\n");
                     for (int i = 0; i < numbers; i++) {
                         if (strcmp(users[i].name, opponent) == 0 && users[i].ongame == false) {
-                            send(users[i].client_socket, "refuse", 6, 0);
-                            printf("Send: refuse\n");
+                            send(users[i].client_socket, "502", 3, 0);
+                            printf("Send: 502\n");
                         }
                     }
                 }
@@ -508,8 +508,8 @@ void *user(void *client_socket) {
             char *password = strtok(NULL, " ");
 
             if (checkLogin(username, password) && checkLogged(username)) {
-                printf("Send: lgt\n");
-                send(player, "lgt", 3, 0);
+                printf("Send: 100\n");
+                send(player, "100", 3, 0);
                 pthread_mutex_lock(&general_mutex);
                 strcpy(users[numbers].name, username);
                 users[numbers].client_socket = player;
@@ -550,11 +550,11 @@ void *user(void *client_socket) {
             char *password = strtok(NULL, " ");
 
             if (registerAccount(username, password)) {
-                printf("Send: ret\n");
-                send(player, "ret", 3, 0);
+                printf("Send: 200\n");
+                send(player, "200", 3, 0);
             } else {
-                printf("Send: ref\n");
-                send(player, "ref", 3, 0);
+                printf("Send: 201\n");
+                send(player, "201", 3, 0);
             }
         } else if (strcmp(userchoose, "exit") == 0) {
             break;

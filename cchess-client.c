@@ -52,7 +52,7 @@ void menuLogin(void *sockfd) {
                         perror("ERROR reading from socket");
                         exit(1);
                     }
-                    if (strcmp(buffer, "lgt") == 0) {
+                    if (strcmp(buffer, "100") == 0) {
                         printf("Login success\n");
                         loggedIn = 1;
                         return;
@@ -86,10 +86,10 @@ void menuLogin(void *sockfd) {
                         perror("ERROR reading from socket");
                         exit(1);
                     }
-                    if (strcmp(buffer, "ret") == 0) {
+                    if (strcmp(buffer, "200") == 0) {
                         printf("Register success\n");
                         break;
-                    } else if (strcmp(buffer, "ref") == 0) {
+                    } else if (strcmp(buffer, "201") == 0) {
                         printf("Register false\n");
                         break;
                     }
@@ -130,13 +130,13 @@ void menuGame(void *sockfd) {
             case 1:
                 n = write(socket, "cre-room", 8);
                 while (1) {
-                    bzero(buffer, 8);
-                    n = read(socket, buffer, 8);
+                    bzero(buffer, 3);
+                    n = read(socket, buffer, 3);
                     if (n < 0) {
                         perror("ERROR reading from socket");
                         exit(1);
                     }
-                    if (strcmp(buffer, "cre-true")) {
+                    if (strcmp(buffer, "400")) {
                         printf("Create room\n");
                         loggedIn = 2;
                         return;
@@ -230,15 +230,15 @@ void menuGame(void *sockfd) {
             case 3:
                 n = write(socket, "log--out", 8);
                 while (1) {
-                    bzero(buffer, 8);
-                    n = read(socket, buffer, 8);
+                    bzero(buffer, 3);
+                    n = read(socket, buffer, 3);
                     if (n < 0) {
                         perror("ERROR reading from socket");
                         exit(1);
                     }
-                    buffer[8] = '\0';
-                    printf("%s-%d\n", buffer, strcmp(buffer, "log-true"));
-                    if (strcmp(buffer, "log-true") == 0) {
+                    buffer[3] = '\0';
+                    printf("%s-%d\n", buffer, strcmp(buffer, "300"));
+                    if (strcmp(buffer, "300") == 0) {
                         printf("Logout Success\n");
                         loggedIn = 0;
                         return;
@@ -334,7 +334,7 @@ void menuGame(void *sockfd) {
 //                         exit(1);
 //                     }
 //                     printf("%s\n", buffer);
-//                     if (strcmp(buffer, "cre-true")) {
+//                     if (strcmp(buffer, "400")) {
 //                         printf("Create room\n");
 //                         loggedIn = 2;
 //                         return NULL;
@@ -350,7 +350,7 @@ void menuGame(void *sockfd) {
 //                         perror("ERROR reading from socket");
 //                         exit(1);
 //                     }
-//                     if (strcmp(buffer, "log-true") == 0) {
+//                     if (strcmp(buffer, "300") == 0) {
 //                         printf("Logout Success\n");
 //                         loggedIn = 0;
 //                         return NULL;
@@ -405,14 +405,14 @@ void menuOnRoom(void *sockfd) {
                     exit(1);
                 }
                 while (1) {
-                    bzero(dataread, 6);
-                    n = read(socket, dataread, 6);
+                    bzero(dataread, 3);
+                    n = read(socket, dataread, 3);
                     if (n < 0) {
                         perror("ERROR reading from socket");
                         exit(1);
                     }
-                    dataread[6] = '\0';
-                    if (strcmp(dataread, "accept") == 0) {
+                    dataread[3] = '\0';
+                    if (strcmp(dataread, "501") == 0) {
                         printf("The opponent party success\n");
                         n = write(socket, "accept", 6);
                         if (n < 0) {
@@ -421,7 +421,7 @@ void menuOnRoom(void *sockfd) {
                         }
                         loggedIn = 3;
                         return;
-                    } else if (strcmp(dataread, "refuse") == 0) {
+                    } else if (strcmp(dataread, "502") == 0) {
                         printf("The opponent party refuses\n");
                         n = write(socket, "refuse", 6);
                         if (n < 0) {

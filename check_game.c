@@ -91,46 +91,46 @@ bool is_syntax_valid(int player, char *move) {
     // Look for -
     if (move[2] != '-') {
         send(player, "e-00", 4, 0);
-        printf("Send: e-mv\n");
+        printf("Send: 1000\n");
         return false;
     }
     // First and 3th should be characters
     if (move[0] - '0' < 10) {
         send(player, "e-01", 4, 0);
-        printf("Send: e-mv\n");
+        printf("Send: 1000\n");
         return false;
     }
     if (move[3] - '0' < 10) {
         send(player, "e-02", 4, 0);
-        printf("Send: e-mv\n");
+        printf("Send: 1000\n");
         return false;
     }
 
     // Second and 5th character should be numbers
     if (move[1] - '0' > 10) {
         send(player, "e-03", 4, 0);
-        printf("Send: e-mv\n");
+        printf("Send: 1000\n");
         return false;
     }
     if (move[1] - '0' > 8) {
         send(player, "e-04", 4, 0);
-        printf("Send: e-mv\n");
+        printf("Send: 1000\n");
         return false;
     }
     if (move[4] - '0' > 10) {
         send(player, "e-05", 4, 0);
-        printf("Send: e-mv\n");
+        printf("Send: 1000\n");
         return false;
     }
     if (move[4] - '0' > 8) {
         send(player, "e-06", 4, 0);
-        printf("Send: e-mv\n");
+        printf("Send: 1000\n");
         return false;
     }
     // Move out of range
     if (move[0] - '0' > 56 || move[3] - '0' > 56) {
         send(player, "e-07", 4, 0);
-        printf("Send: e-mv\n");
+        printf("Send: 1000\n");
         return false;
     }
 
@@ -291,18 +291,18 @@ bool is_move_valid(wchar_t **board, int player, int team, int *move) {
     // General errors
     if (board[*(move)][move[1]] == 0) {
         send(player, "e-08", 4, 0);
-        printf("Send: e-mv\n");
+        printf("Send: 1000\n");
         return false;
     }  // If selected piece == 0 there's nothing selected
     if (*piece_team == get_piece_team(board, move[2], move[3])) {
         send(player, "e-09", 4, 0);
-        printf("Send: e-mv\n");
+        printf("Send: 1000\n");
         return false;
     }  // If the origin piece's team == dest piece's team is an invalid move
     // Check if user is moving his piece
     if (team != *piece_team) {
         send(player, "e-07", 4, 0);
-        printf("Send: e-mv\n");
+        printf("Send: 1000\n");
         return false;
     }
 
@@ -315,7 +315,7 @@ bool is_move_valid(wchar_t **board, int player, int team, int *move) {
         case 0: /* --- ♚ --- */
             if (*x_moves > 1 || *y_moves > 1) {
                 send(player, "e-10", 5, 0);
-                printf("Send: e-mv\n");
+                printf("Send: 1000\n");
                 freeAll(piece_team, x_moves, y_moves);
                 return false;
             }
@@ -323,18 +323,18 @@ bool is_move_valid(wchar_t **board, int player, int team, int *move) {
         case 1:
             if (!is_rect(move) && !is_diagonal(*x_moves, *y_moves)) {
                 send(player, "e-queen", 4, 0);
-                printf("Send: e-mv\n");
+                printf("Send: 1000\n");
                 freeAll(piece_team, x_moves, y_moves);
                 return false;
             }
             if (!is_rect_clear(board, move, *x_moves, *y_moves)) {
                 send(player, "e-31", 4, 0);
-                printf("Send: e-mv\n");
+                printf("Send: 1000\n");
                 freeAll(piece_team, x_moves, y_moves);
                 return false;
             }
             if (!is_diagonal_clear(board, move)) {
-                printf("Send: e-mv\n");
+                printf("Send: 1000\n");
                 send(player, "e-41", 4, 0);
                 freeAll(piece_team, x_moves, y_moves);
                 return false;
@@ -348,13 +348,13 @@ bool is_move_valid(wchar_t **board, int player, int team, int *move) {
         case 2: /* --- ♜ --- */
             if (!is_rect(move)) {
                 send(player, "e-30", 5, 0);
-                printf("Send: e-mv\n");
+                printf("Send: 1000\n");
                 freeAll(piece_team, x_moves, y_moves);
                 return false;
             }
             if (!is_rect_clear(board, move, *x_moves, *y_moves)) {
                 send(player, "e-31", 4, 0);
-                printf("Send: e-mv\n");
+                printf("Send: 1000\n");
                 freeAll(piece_team, x_moves, y_moves);
                 return false;
             }
@@ -367,13 +367,13 @@ bool is_move_valid(wchar_t **board, int player, int team, int *move) {
         case 3: /* ––– ♝ ––– */
             if (!is_diagonal(*x_moves, *y_moves)) {
                 send(player, "e-40", 4, 0);
-                printf("Send: e-mv\n");
+                printf("Send: 1000\n");
                 freeAll(piece_team, x_moves, y_moves);
                 return false;  // Check if it's a valid diagonal move
             }
             if (!is_diagonal_clear(board, move)) {
                 send(player, "e-41", 4, 0);
-                printf("Send: e-mv\n");
+                printf("Send: 1000\n");
                 freeAll(piece_team, x_moves, y_moves);
                 return false;
             }
@@ -386,7 +386,7 @@ bool is_move_valid(wchar_t **board, int player, int team, int *move) {
         case 4: /* --- ♞ --- */
             if ((abs(*x_moves) != 1 || abs(*y_moves) != 2) && (abs(*x_moves) != 2 || abs(*y_moves) != 1)) {
                 send(player, "e-50", 4, 0);
-                printf("Send: e-mv\n");
+                printf("Send: 1000\n");
                 freeAll(piece_team, x_moves, y_moves);
                 return false;
             }
@@ -402,7 +402,7 @@ bool is_move_valid(wchar_t **board, int player, int team, int *move) {
                 if (*piece_team == 1 && (*move - move[2]) == 1) {
                     if (eat_piece(board, move[2], move[3])) {
                         send(player, "i-99", 4, 0);
-                        printf("Send: e-mv\n");
+                        printf("Send: 1000\n");
                         if (move[2] == 0) {
                             promote_piece(board, *move, move[1], *piece_team);
                             send(player, "i-98", 4, 0);
@@ -440,7 +440,7 @@ bool is_move_valid(wchar_t **board, int player, int team, int *move) {
                         return true;
                     } else {
                         send(player, "e-62", 5, 0);
-                        printf("Send: e-mv\n");
+                        printf("Send: 1000\n");
                         freeAll(piece_team, x_moves, y_moves);
                         return false;
                     } 
