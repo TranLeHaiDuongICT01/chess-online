@@ -52,11 +52,11 @@ void menuLogin(void *sockfd) {
                         perror("ERROR reading from socket");
                         exit(1);
                     }
-                    if (buffer[0] == 't') {
+                    if (strcmp(buffer, "100") == 0) {
                         printf("Login success\n");
                         loggedIn = 1;
                         return;
-                    } else if (buffer[0] == 'f') {
+                    } else if (strcmp(buffer, "101") == 0) {
                         printf("Login false\n");
                         break;
                     }
@@ -86,10 +86,10 @@ void menuLogin(void *sockfd) {
                         perror("ERROR reading from socket");
                         exit(1);
                     }
-                    if (buffer[0] == 't') {
+                    if (strcmp(buffer, "200") == 0) {
                         printf("Register success\n");
                         break;
-                    } else if (buffer[0] == 'f') {
+                    } else if (strcmp(buffer, "201") == 0) {
                         printf("Register false\n");
                         break;
                     }
