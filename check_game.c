@@ -311,6 +311,7 @@ bool is_move_valid(wchar_t **board, int player, int team, int *move) {
     // XMOVES = getManitud(*move, move[2])
     // YMOVES = getManitud(move[1], move[3])
     printf("Moved piece -> %d \n", get_piece_type(board[*(move)][move[1]]));
+    printf("Send: 1004\n");
     switch (get_piece_type(board[*(move)][move[1]])) {
         case 0: /* --- ♚ --- */
             if (*x_moves > 1 || *y_moves > 1) {
