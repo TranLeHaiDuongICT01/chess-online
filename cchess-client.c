@@ -517,12 +517,12 @@ void *on_signal(void *sockfd) {
         } else if (buffer[0] == 'b') {
             printf("Your opponent has left the room. Please leave here\n");
             exit(1);
-        } else if (buffer[0] == 'g' && buffer[2] == 'e') {
+        } else if (buffer[0] == '1' && buffer[1] == '0' && buffer[2] == '0' && buffer[3] == '1') {
             printf("The opponent surrendered. Yes or No\n");
         } else if (buffer[0] == 'g' && buffer[2] == 'o') {
             printf("You lose\n");
             exit(1);
-        } else if (buffer[0] == 'g' && buffer[2] == 'n') {
+        } else if (buffer[0] == '1' && buffer[1] == '0' && buffer[2] == '0' && buffer[3] == '3') {
             printf("The opponent refused. Let's move\n");
             continue;
         } else {
