@@ -137,9 +137,12 @@ void *game_room() {
                 perror("ERROR reading from socket");
                 exit(1);
             }
+            printf("Receive: %s\n", buffer);
             printf("Player one (%d) move: %s\n", player_one, buffer);
 
             if (buffer[0] == 'g' && buffer[1] == 'i') {
+                printf("Receive: gi\n");
+                printf("Send: gyes\n");
                 send(player_two, "gyes", 4, 0);
                 while (1) {
                     bzero(buffer, 6);
@@ -148,6 +151,9 @@ void *game_room() {
                         exit(1);
                     }
                     if (buffer[0] == 'y' && buffer[1] == 'e') {
+                        printf("Receive: ye\n");
+                        printf("Send: g-ok\n");
+                        printf("Send: w\n");
                         send(player_one, "g-ok", 4, 0);
                         send(player_two, "w", 1, 0);
                         free(move);
@@ -158,6 +164,8 @@ void *game_room() {
                         return 0;
                     } else if (buffer[0] == 'n' && buffer[1] == 'o') {
                         send(player_one, "g-no", 4, 0);
+                        printf("Receive: no\n");
+                        printf("Send: g-no\n");
                         break;
                     }
                 }
@@ -217,6 +225,8 @@ void *game_room() {
             if (buffer[0] == '\n') {
                 continue;
             } else if (buffer[0] == 'g' && buffer[1] == 'i') {
+                printf("Receive: gi\n");
+                printf("Send: gyes\n");
                 send(player_one, "gyes", 4, 0);
                 while (1) {
                     bzero(buffer, 6);
@@ -225,6 +235,9 @@ void *game_room() {
                         exit(1);
                     }
                     if (buffer[0] == 'y' && buffer[1] == 'e') {
+                        printf("Receive: ye\n");
+                        printf("Send: g-ok\n");
+                        printf("Send: w\n");
                         send(player_two, "g-ok", 4, 0);
                         send(player_one, "w", 1, 0);
                         free(move);
@@ -234,6 +247,8 @@ void *game_room() {
                         close(player_two);
                         return 0;
                     } else if (buffer[0] == 'n' && buffer[1] == 'o') {
+                        printf("Receive: no\n");
+                        printf("Send: g-no\n");;
                         send(player_two, "g-no", 4, 0);
                         break;
                     }
@@ -328,7 +343,7 @@ int lobby(int player, char *username) {
                     exit(1);
                 }
                 lobbychoose[6] = '\0';
-                printf("Buffer waitInvite: %s\n", lobbychoose);
+                // printf("Buffer waitInvite: %s\n", lobbychoose);
                 if (strcmp(lobbychoose, "accept") == 0) {
                     printf("Receive: accept\n");
                     // Chap nhan loi moi (accept)

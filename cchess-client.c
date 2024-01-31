@@ -505,7 +505,7 @@ void *on_signal(void *sockfd) {
                             break;
                     }
                 }
-                printf("\nerror %s\n", buffer);
+                printf("\nerror invalid move\n");
             }
             // Check if it's an informative or error message
         } else if (buffer[0] == 'w') {
