@@ -56,7 +56,7 @@ void menuLogin(void *sockfd) {
                         printf("Login success\n");
                         loggedIn = 1;
                         return;
-                    } else if (strcmp(buffer, "lgf") == 0) {
+                    } else if (strcmp(buffer, "101") == 0) {
                         printf("Login false\n");
                         break;
                     }
