@@ -187,7 +187,7 @@ void *game_room() {
                 setLogOnGame(player_one, player_two, buffer, 1);
             }
         }
-
+        printf("Send: 1004\n");
         printf("Player one (%d) made move\n", player_one);
 
         syntax_valid = false;
@@ -268,6 +268,7 @@ void *game_room() {
                 setLogOnGame(player_one, player_two, buffer, 2);
             }
         }
+        printf("Send: 1004\n");
         printf("Player two (%d) made move\n", player_two);
 
         syntax_valid = false;
